@@ -28,10 +28,10 @@ jobs:
             docker/Dockerfile
       -
         name: check
+        id: check
         if: steps.changed-files-specific-readme.outputs.any_changed == 'true'
         run: echo Dockerfile modified
       -
         name: afterward
-        if: ${{ success() }}
-        run: echo afterward
+        run: echo ${{ steps.check.conclusion }}
         
