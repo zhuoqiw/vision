@@ -34,6 +34,5 @@ jobs:
         run: echo
       -
         name: afterward
-        if: ${{ CHANGED_FILE }}
-        run: echo ${{ steps.check.conclusion }}
+        run: echo ${{ env.CHANGED_FILE }}
         
