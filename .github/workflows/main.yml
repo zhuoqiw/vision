@@ -1,0 +1,37 @@
+name: ci
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  job1:
+    name: Build ROS docker image
+    runs-on: ubuntu-20.04
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - 
+        name: Check out repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      -
+        name: Get specific changed files
+        id: changed-files-specific-readme
+        uses: tj-actions/changed-files@v8
+        with:
+          files: |
+            docker/Dockerfile
+      -
+        name: check
+        if: steps.changed-files-specific-readme.outputs.any_changed == 'true'
+        run: echo Dockerfile modified
+      -
+        name: afterward
+        if: ${{ success() }}
+        run: echo afterward
+        
