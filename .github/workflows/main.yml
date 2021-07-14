@@ -36,4 +36,11 @@ jobs:
         name: afterward
         if: env.dockerfile_changed
         run: echo afterward
+  job2:
+    name: Build ROS docker image 2
+    runs-on: ubuntu-20.04
+    steps:
+      -
+        name: Test
+        run: echo {{ $GITHUB_ENV }}
         
