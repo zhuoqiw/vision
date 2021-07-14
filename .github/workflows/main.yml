@@ -26,6 +26,9 @@ jobs:
         with:
           files: docker/Dockerfile
       -
+        name: Test
+        run: echo {{ $GITHUB_ENV }}
+      -
         name: check
         if: steps.changed-files.outputs.any_changed == 'true'
         run: echo "dockerfile_changed=true" >> $GITHUB_ENV
