@@ -26,16 +26,11 @@ jobs:
         with:
           files: docker/Dockerfile
       -
-        name: Test
-        run: echo {{ $GITHUB_ENV }}
-      -
         name: check
         if: steps.changed-files.outputs.any_changed == 'true'
-        run: echo "dockerfile_changed=true" >> $GITHUB_ENV
-      -
-        name: afterward
-        if: env.dockerfile_changed
-        run: echo afterward
+        uses: ./.github/actions/build-push-action
+        with:
+          context: ./docker
   job2:
     name: Build ROS docker image 2
     runs-on: ubuntu-20.04

@@ -34,7 +34,7 @@ runs:
         context: ${{ input.context }}
         platforms: linux/amd64
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/app:latest
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/app-temp:latest
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache-new
     - # Temp fix
