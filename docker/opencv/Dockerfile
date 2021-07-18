@@ -26,6 +26,7 @@ RUN cmake \
   -D WITH_GSTREAMER:BOOL=OFF \
   -D WITH_GTK:BOOL=OFF \
   -D WITH_VTK:BOOL=OFF \
+  -D WITH_OPENJPEG:BOOL=OFF \
   -S opencv-4.5.2/ \
   -B build/
 
