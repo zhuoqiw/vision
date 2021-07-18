@@ -64,7 +64,7 @@ jobs:
           context: ./docker/opencv
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ros-opencv:latest
+          tags: ${{ secrets.DOCKER_HUB_USER_NAME }}/ros-opencv:latest
           cache-from: type=local,src=/tmp/.buildx-cache/opencv
           cache-to: type=local,dest=/tmp/.buildx-cache-new/opencv
       -
@@ -127,7 +127,7 @@ jobs:
           context: ./docker/pcl
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/ros-pcl:latest
+          tags: ${{ secrets.DOCKER_HUB_USER_NAME }}/ros-pcl:latest
           cache-from: type=local,src=/tmp/.buildx-cache/pcl
           cache-to: type=local,dest=/tmp/.buildx-cache-new/pcl
       -
