@@ -74,5 +74,5 @@ jobs:
         name: Move cache
         if: env.any_changed
         run: |
-          rm -rf /tmp/.buildx-cache/opencv
-          mv /tmp/.buildx-cache-new/opencv /tmp/.buildx-cache/opencv
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
