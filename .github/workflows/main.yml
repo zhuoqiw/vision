@@ -80,7 +80,8 @@ jobs:
     name: Build and test src
     needs: build-ros-image
     runs-on: ubuntu-20.04
-    container: ${{ secrets.DOCKER_HUB_USER_NAME }}/ros
+    container: 
+      image: ${{ secrets.DOCKER_HUB_USER_NAME }}/ros
     steps:
       - name: Checkout
         uses: actions/checkout@v2
