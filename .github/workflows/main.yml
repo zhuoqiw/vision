@@ -8,13 +8,16 @@ on:
   pull_request:
     branches: [ main ]
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
-  job1:
-    name: Build ROS docker image
+  build-ros-image:
+    name: Build ros image
     runs-on: ubuntu-20.04
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - 
+      -
         name: Check out repository
         uses: actions/checkout@v2
         with:
@@ -24,23 +27,65 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v8
         with:
-          files: docker/Dockerfile
+          files: Dockerfile
       -
-        name: Test
-        run: echo {{ $GITHUB_ENV }}
+        name: Check and set env
+        if: steps.changed-files.outputs.any_changed
+        run: echo "any_changed=true" >> $GITHUB_ENV
       -
-        name: check
-        if: steps.changed-files.outputs.any_changed == 'true'
-        run: echo "dockerfile_changed=true" >> $GITHUB_ENV
+        name: Set up QEMU
+        if: env.any_changed
+        uses: docker/setup-qemu-action@v1
       -
-        name: afterward
-        if: env.dockerfile_changed
-        run: echo afterward
-  job2:
-    name: Build ROS docker image 2
+        name: Set up Docker Buildx
+        if: env.any_changed
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Cache Docker layers
+        if: env.any_changed
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+      -
+        name: Login to DockerHub
+        if: env.any_changed
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER_NAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      -
+        name: Build and push
+        if: env.any_changed
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          tags: zhuoqiw/ros
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+      -
+        # Temp fix
+        # https://github.com/docker/build-push-action/issues/252
+        # https://github.com/moby/buildkit/issues/1896
+        name: Move cache
+        if: env.any_changed
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+  build-test-src:
+    name: Build and test src
+    needs: build-ros-image
     runs-on: ubuntu-20.04
+    container: 
+      image: zhuoqiw/ros
     steps:
-      -
-        name: Test
-        run: echo {{ $GITHUB_ENV }}
-        
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: /ros_entrypoint.sh colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+      - name: Test
+        run: /ros_entrypoint.sh colcon test
