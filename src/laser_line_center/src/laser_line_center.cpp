@@ -55,10 +55,10 @@ public:
 private:
   void _InitializeParameters()
   {
-    _node->declare_parameter("ksize");
-    _node->declare_parameter("threshold");
-    _node->declare_parameter("width_min");
-    _node->declare_parameter("width_max");
+    _node->declare_parameter("ksize", _ksize);
+    _node->declare_parameter("threshold", _threshold);
+    _node->declare_parameter("width_min", _widthMin);
+    _node->declare_parameter("width_max", _widthMax);
   }
 
   void _UpdateParameters()
