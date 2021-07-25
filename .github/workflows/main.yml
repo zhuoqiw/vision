@@ -64,7 +64,7 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          tags: ros:latest
+          tags: ${{ secrets.DOCKER_HUB_USER_NAME }}/ros:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       -
