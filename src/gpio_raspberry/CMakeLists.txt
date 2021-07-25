@@ -20,9 +20,9 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(std_srvs REQUIRED)
-find_package(GPIOD REQUIRED)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" CMAKE_MODULE_PATH)
+find_package(GPIOD REQUIRED)
 
 add_library(gpio_raspberry SHARED src/gpio_raspberry.cpp)
 
