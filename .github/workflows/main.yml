@@ -64,7 +64,7 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USER_NAME }}/ros:latest
+          tags: ros:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       -
@@ -79,9 +79,11 @@ jobs:
   build-test-src:
     name: Build and test src
     needs: build-ros-image
+    env:
+      DOCKER_HUB_USER_NAME: ${{ secrets.DOCKER_HUB_USER_NAME }}
     runs-on: ubuntu-20.04
     container: 
-      image: ${{ secrets.DOCKER_HUB_USER_NAME }}/ros
+      image: $DOCKER_HUB_USER_NAME/ros
     steps:
       - name: Checkout
         uses: actions/checkout@v2
