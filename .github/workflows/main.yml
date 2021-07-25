@@ -25,13 +25,13 @@ jobs:
       -
         name: Get specific changed files
         id: changed-files
-        uses: tj-actions/changed-files@v8
+        uses: tj-actions/changed-files@v9
         with:
           files: Dockerfile
       -
         name: Check and set env
-        if: steps.changed-files.outputs.any_changed
-        run: echo "any_changed=true" >> $GITHUB_ENV
+        #if: steps.changed-files.outputs.any_changed
+        run: echo "any_changed=${{ steps.changed-files.outputs.any_changed }}" >> $GITHUB_ENV
       -
         name: Set up QEMU
         if: env.any_changed
