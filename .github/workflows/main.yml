@@ -33,6 +33,9 @@ jobs:
         #if: steps.changed-files.outputs.any_changed
         #run: echo "any_changed=${{ true }}" >> $GITHUB_ENV
       -
+        name: test
+        run: echo "${{ steps.changed-files.outputs.any_changed }}"
+      -
         name: Set up QEMU
         if: steps.changed-files.outputs.any_changed
         uses: docker/setup-qemu-action@v1
