@@ -37,6 +37,7 @@ RUN wget -O paho.mqtt.cpp.tar.gz https://github.com/eclipse/paho.mqtt.cpp/archiv
   && cmake \
     -D CMAKE_BUILD_TYPE=Release \
     -D PAHO_BUILD_STATIC=ON \
+    -D PAHO_WITH_SSL=OFF \
     -S paho.mqtt.cpp-1.2.0/ \
     -B build/ \
   && cmake --build build/ --target install \
