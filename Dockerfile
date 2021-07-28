@@ -27,7 +27,7 @@ RUN wget -O paho.mqtt.c.tar.gz https://github.com/eclipse/paho.mqtt.c/archive/re
     -D PAHO_HIGH_PERFORMANCE=ON \
     -S paho.mqtt.c-1.3.9/ \
     -B build/ \
-  && cmake --build build/ --target install
+  && cmake --build build/ --target install \
   && rm -r paho.mqtt.c-1.3.9 build
 
 # Install paho mqtt cpp
@@ -39,5 +39,5 @@ RUN wget -O paho.mqtt.cpp.tar.gz https://github.com/eclipse/paho.mqtt.cpp/archiv
     -D PAHO_BUILD_STATIC=ON \
     -S paho.mqtt.cpp-1.2.0/ \
     -B build/ \
-  && cmake --build build/ --target install
+  && cmake --build build/ --target install \
   && rm -r paho.mqtt.cpp-1.2.0 build
