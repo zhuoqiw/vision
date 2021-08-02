@@ -44,4 +44,5 @@ RUN wget -O paho.mqtt.cpp.tar.gz https://github.com/eclipse/paho.mqtt.cpp/archiv
   && rm -r paho.mqtt.cpp-1.2.0 build
 
 # Install nlohmann json
-RUN wget -O /usr/local/include/nlohmann/json.hpp https://github.com/nlohmann/json/releases/download/v3.9.1/json.hpp
+RUN wget https://github.com/nlohmann/json/releases/download/v3.9.1/json.hpp \
+  && mv json.hpp /usr/local/include/nlohmann/json.hpp
