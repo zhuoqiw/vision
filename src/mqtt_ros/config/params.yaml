@@ -1,0 +1,6 @@
+mqtt_ros_node:
+  ros__parameters:
+    server_address: 'tcp://127.0.0.1:1883'  #string
+    client_id: 'paho_cpp_async_subcribe'    #string
+    topic: 'iot/zhushi/scanner/1'           #string
+    qos: 2                                  #enum: 0, 1, 2
