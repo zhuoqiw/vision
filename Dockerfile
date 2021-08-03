@@ -48,6 +48,10 @@ RUN wget https://github.com/nlohmann/json/releases/download/v3.9.1/json.hpp \
   && mkdir -p /usr/local/include/nlohmann \
   && mv json.hpp /usr/local/include/nlohmann/json.hpp
 
+RUN apt-get update && apt-get install -y \
+  libflann-dev \
+  && rm -rf /var/lib/apt/lists/*
+
 # Install pcl
 RUN wget -O pcl.tar.gz https://github.com/PointCloudLibrary/pcl/archive/refs/tags/pcl-1.12.0.tar.gz \
   && tar -xzf pcl.tar.gz \
