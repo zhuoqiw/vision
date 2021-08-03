@@ -277,12 +277,12 @@ void ScriptJson::_SubResult(shared_interfaces::msg::Float64Array::UniquePtr ptr)
 
 void ScriptJson::_InitializeParameters()
 {
-  this->declare_parameter("required_nodes");
+  this->declare_parameter("required_nodes", _requiredNodes);
   this->get_parameter("required_nodes", _requiredNodes);
 
   for (const auto & n : _requiredNodes) {
-    this->declare_parameter(n);
     std::vector<std::string> temp;
+    this->declare_parameter(n, temp);
     this->get_parameter(n, temp);
     _requiredServices[n] = std::move(temp);
   }
