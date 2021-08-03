@@ -1,0 +1,6 @@
+script_json_node:
+  ros__parameters:
+    required_nodes: ['gpio_raspberry_node', 'motor_node', 'inclinometer_node', 'mqtt_ros_node', 'camera_galaxy_node', 'laser_line_center_node_l', 'laser_line_center_node_r', 'laser_line_reconstruct_node', 'point_cloud_collect_node', 'point_cloud_analyse_node']
+    gpio_raspberry_node: ['high', 'low', 'toggle']
+    motor_node: ['zero', 'center', 'scan']
+    camera_galaxy_node: ['start', 'stop']
