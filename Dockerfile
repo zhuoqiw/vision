@@ -49,6 +49,7 @@ RUN wget https://github.com/nlohmann/json/releases/download/v3.9.1/json.hpp \
   && mv json.hpp /usr/local/include/nlohmann/json.hpp
 
 RUN apt-get update && apt-get install -y \
+  libboost-dev \
   libflann-dev \
   && rm -rf /var/lib/apt/lists/*
 
