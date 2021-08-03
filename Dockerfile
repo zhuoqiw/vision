@@ -50,6 +50,10 @@ RUN wget https://github.com/nlohmann/json/releases/download/v3.9.1/json.hpp \
 
 RUN apt-get update && apt-get install -y \
   libboost-dev \
+  libboost-filesystem-dev \
+  libboost-date-time-dev \
+  libboost-iostreams-dev \
+  libboost-system-dev \
   libflann-dev \
   && rm -rf /var/lib/apt/lists/*
 
