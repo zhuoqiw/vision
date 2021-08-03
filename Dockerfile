@@ -49,9 +49,9 @@ RUN wget https://github.com/nlohmann/json/releases/download/v3.9.1/json.hpp \
   && mv json.hpp /usr/local/include/nlohmann/json.hpp
 
 # Install pcl
-RUN wget https://github.com/PointCloudLibrary/pcl/archive/refs/tags/pcl-1.12.0.tar.gz \
-  && tar -xzf pcl-1.12.0.tar.gz \
-  && rm pcl-1.12.0.tar.gz \
+RUN wget -O pcl.tar.gz https://github.com/PointCloudLibrary/pcl/archive/refs/tags/pcl-1.12.0.tar.gz \
+  && tar -xzf pcl.tar.gz \
+  && rm pcl.tar.gz \
   && cmake \
     -D CMAKE_BUILD_TYPE:STRING=Release \
     -D BUILD_CUDA:BOOL=OFF \
