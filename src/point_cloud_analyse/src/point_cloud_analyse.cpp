@@ -35,7 +35,7 @@
 namespace point_cloud_analyse
 {
 
-void toPCL(const sensor_msgs::msg::PointField &pf, pcl::PCLPointField &pcl_pf)
+void toPCL(const sensor_msgs::msg::PointField & pf, pcl::PCLPointField & pcl_pf)
 {
   pcl_pf.name = pf.name;
   pcl_pf.offset = pf.offset;
@@ -43,23 +43,23 @@ void toPCL(const sensor_msgs::msg::PointField &pf, pcl::PCLPointField &pcl_pf)
   pcl_pf.count = pf.count;
 }
 
-void toPCL(const std::vector<sensor_msgs::msg::PointField> &pfs,
-  std::vector<pcl::PCLPointField> &pcl_pfs)
+void toPCL(const std::vector<sensor_msgs::msg::PointField> & pfs,
+  std::vector<pcl::PCLPointField> & pcl_pfs)
 {
   pcl_pfs.resize(pfs.size());
   std::vector<sensor_msgs::msg::PointField>::const_iterator it = pfs.begin();
   int i = 0;
-  for(; it != pfs.end(); ++it, ++i) {
+  for (; it != pfs.end(); ++it, ++i) {
     toPCL(*(it), pcl_pfs[i]);
   }
 }
 
-void toPCL(const rclcpp::Time &stamp, std::uint64_t &pcl_stamp)
+void toPCL(const rclcpp::Time & stamp, std::uint64_t & pcl_stamp)
 {
   pcl_stamp = stamp.nanoseconds() / 1000ull;  // Convert from ns to us
 }
 
-void toPCL(const std_msgs::msg::Header &header, pcl::PCLHeader &pcl_header)
+void toPCL(const std_msgs::msg::Header & header, pcl::PCLHeader & pcl_header)
 {
   toPCL(header.stamp, pcl_header.stamp);
   // TODO(clalancette): Seq doesn't exist in the ROS2 header
@@ -70,8 +70,8 @@ void toPCL(const std_msgs::msg::Header &header, pcl::PCLHeader &pcl_header)
   pcl_header.frame_id = header.frame_id;
 }
 
-void copyPointCloud2MetaData(const sensor_msgs::msg::PointCloud2 &pc2,
-  pcl::PCLPointCloud2 &pcl_pc2)
+void copyPointCloud2MetaData(const sensor_msgs::msg::PointCloud2 & pc2,
+  pcl::PCLPointCloud2 & pcl_pc2)
 {
   toPCL(pc2.header, pcl_pc2.header);
   pcl_pc2.height = pc2.height;
@@ -83,14 +83,14 @@ void copyPointCloud2MetaData(const sensor_msgs::msg::PointCloud2 &pc2,
   pcl_pc2.is_dense = pc2.is_dense;
 }
 
-void moveToPCL(sensor_msgs::msg::PointCloud2 &pc2, pcl::PCLPointCloud2 &pcl_pc2)
+void moveToPCL(sensor_msgs::msg::PointCloud2 & pc2, pcl::PCLPointCloud2 & pcl_pc2)
 {
   copyPointCloud2MetaData(pc2, pcl_pc2);
   pcl_pc2.data.swap(pc2.data);
 }
 
 template<typename T>
-void moveFromROSMsg(sensor_msgs::msg::PointCloud2 &cloud, pcl::PointCloud<T> &pcl_cloud)
+void moveFromROSMsg(sensor_msgs::msg::PointCloud2 & cloud, pcl::PointCloud<T> & pcl_cloud)
 {
   pcl::PCLPointCloud2 pcl_pc2;
   moveToPCL(cloud, pcl_pc2);
@@ -178,7 +178,7 @@ public:
     ne.setKSearch(25);
     ne.compute(*normal);
 
-    //pcl::io::savePCDFileASCII("/home/ubuntu/http_server/cloud.pcd", *cloud);
+    // pcl::io::savePCDFileASCII("/home/ubuntu/http_server/cloud.pcd", *cloud);
 
     // Region grow
     pcl::RegionGrowing<pcl::PointXYZI, pcl::Normal> rg;
