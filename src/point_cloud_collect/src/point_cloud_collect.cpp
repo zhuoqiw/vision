@@ -35,6 +35,16 @@ void toPCL(const sensor_msgs::msg::PointField &pf, pcl::PCLPointField &pcl_pf)
   pcl_pf.count = pf.count;
 }
 
+void toPCL(const std::vector<sensor_msgs::msg::PointField> &pfs, std::vector<pcl::PCLPointField> &pcl_pfs)
+{
+  pcl_pfs.resize(pfs.size());
+  std::vector<sensor_msgs::msg::PointField>::const_iterator it = pfs.begin();
+  int i = 0;
+  for(; it != pfs.end(); ++it, ++i) {
+    toPCL(*(it), pcl_pfs[i]);
+  }
+}
+
 void toPCL(const rclcpp::Time &stamp, std::uint64_t &pcl_stamp)
 {
   pcl_stamp = stamp.nanoseconds() / 1000ull;  // Convert from ns to us
@@ -98,6 +108,16 @@ void fromPCL(const pcl::PCLPointField &pcl_pf, sensor_msgs::msg::PointField &pf)
   pf.count = pcl_pf.count;
 }
 
+void fromPCL(const std::vector<pcl::PCLPointField> &pcl_pfs, std::vector<sensor_msgs::msg::PointField> &pfs)
+{
+  pfs.resize(pcl_pfs.size());
+  std::vector<pcl::PCLPointField>::const_iterator it = pcl_pfs.begin();
+  int i = 0;
+  for(; it != pcl_pfs.end(); ++it, ++i) {
+    fromPCL(*(it), pfs[i]);
+  }
+}
+
 void copyPCLPointCloud2MetaData(const pcl::PCLPointCloud2 &pcl_pc2, sensor_msgs::msg::PointCloud2 &pc2)
 {
   fromPCL(pcl_pc2.header, pc2.header);
@@ -121,7 +141,7 @@ void toROSMsg(const pcl::PointCloud<T> &pcl_cloud, sensor_msgs::msg::PointCloud2
 {
   pcl::PCLPointCloud2 pcl_pc2;
   pcl::toPCLPointCloud2(pcl_cloud, pcl_pc2);
-  pcl_conversions::moveFromPCL(pcl_pc2, cloud);
+  moveFromPCL(pcl_pc2, cloud);
 }
 
 class PointCloudCollect::_Impl

@@ -43,6 +43,16 @@ void toPCL(const sensor_msgs::msg::PointField &pf, pcl::PCLPointField &pcl_pf)
   pcl_pf.count = pf.count;
 }
 
+void toPCL(const std::vector<sensor_msgs::msg::PointField> &pfs, std::vector<pcl::PCLPointField> &pcl_pfs)
+{
+  pcl_pfs.resize(pfs.size());
+  std::vector<sensor_msgs::msg::PointField>::const_iterator it = pfs.begin();
+  int i = 0;
+  for(; it != pfs.end(); ++it, ++i) {
+    toPCL(*(it), pcl_pfs[i]);
+  }
+}
+
 void toPCL(const rclcpp::Time &stamp, std::uint64_t &pcl_stamp)
 {
   pcl_stamp = stamp.nanoseconds() / 1000ull;  // Convert from ns to us
