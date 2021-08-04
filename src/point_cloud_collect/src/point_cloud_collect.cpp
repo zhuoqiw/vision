@@ -215,7 +215,7 @@ private:
 
     if (_cloud->width != 0) {
       for (auto & p : *_cloud) {p.intensity = 0;}
-      pcl::toROSMsg(*_cloud, *ptr);
+      toROSMsg(*_cloud, *ptr);
       ptr->header.stamp = _node->now();
       ptr->header.frame_id = _frameID;
       _node->_pub->publish(std::move(ptr));
