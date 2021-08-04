@@ -58,6 +58,7 @@ RUN apt-get update && apt-get install -y \
   ros-galactic-pcl-conversions \
   && rm -rf /var/lib/apt/lists/*
 
+
 # Install pcl
 RUN wget -O pcl.tar.gz https://github.com/PointCloudLibrary/pcl/archive/refs/tags/pcl-1.12.0.tar.gz \
   && tar -xzf pcl.tar.gz \
