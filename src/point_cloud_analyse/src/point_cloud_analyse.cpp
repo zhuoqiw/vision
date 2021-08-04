@@ -176,7 +176,7 @@ public:
     ne.setKSearch(25);
     ne.compute(*normal);
 
-    pcl::io::savePCDFileASCII("/home/ubuntu/http_server/cloud.pcd", *cloud);
+    //pcl::io::savePCDFileASCII("/home/ubuntu/http_server/cloud.pcd", *cloud);
 
     // Region grow
     pcl::RegionGrowing<pcl::PointXYZI, pcl::Normal> rg;
@@ -412,7 +412,6 @@ private:
 
   std::mutex _mutex;              ///< Mutex to protect shared storage
   std::condition_variable _con;   ///< Conditional variable rely on mutex
-  std::deque<sensor_msgs::msg::Image::UniquePtr> _deq;
   std::thread _thread;
 };
 
