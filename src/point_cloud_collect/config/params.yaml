@@ -1,0 +1,3 @@
+point_cloud_collect_node:
+  ros__parameters:
+    frame_id: 'inclinometer'

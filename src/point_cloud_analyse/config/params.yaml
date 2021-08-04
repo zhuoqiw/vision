@@ -1,0 +1,4 @@
+point_cloud_analyse_node:
+  ros__parameters:
+    frame_id: 'inclinometer'
+    mode: 0
