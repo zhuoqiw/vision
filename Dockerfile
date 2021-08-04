@@ -48,7 +48,8 @@ RUN wget https://github.com/nlohmann/json/releases/download/v3.9.1/json.hpp \
   && mkdir -p /usr/local/include/nlohmann \
   && mv json.hpp /usr/local/include/nlohmann/json.hpp
 
-RUN apt-get update && apt-get install -y \
+RUN DEBIAN_FRONTEND=noninteractive \
+  apt-get update && apt-get install -y \
   libboost-dev \
   libboost-filesystem-dev \
   libboost-date-time-dev \
