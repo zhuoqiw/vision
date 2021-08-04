@@ -48,8 +48,9 @@ RUN wget https://github.com/nlohmann/json/releases/download/v3.9.1/json.hpp \
   && mkdir -p /usr/local/include/nlohmann \
   && mv json.hpp /usr/local/include/nlohmann/json.hpp
 
-RUN DEBIAN_FRONTEND=noninteractive \
-  apt-get update && apt-get install -y \
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
   libboost-dev \
   libboost-filesystem-dev \
   libboost-date-time-dev \
@@ -58,7 +59,6 @@ RUN DEBIAN_FRONTEND=noninteractive \
   libflann-dev \
   ros-galactic-pcl-conversions \
   && rm -rf /var/lib/apt/lists/*
-
 
 # Install pcl
 RUN wget -O pcl.tar.gz https://github.com/PointCloudLibrary/pcl/archive/refs/tags/pcl-1.12.0.tar.gz \
