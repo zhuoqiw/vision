@@ -87,16 +87,16 @@ void moveFromROSMsg(sensor_msgs::msg::PointCloud2 &cloud, pcl::PointCloud<T> &pc
   pcl::fromPCLPointCloud2(pcl_pc2, pcl_cloud);
 }
 
+void fromPCL(const std::uint64_t &pcl_stamp, rclcpp::Time &stamp)
+{
+  stamp = rclcpp::Time(pcl_stamp * 1000ull); // Convert from us to ns
+}
+
 rclcpp::Time fromPCL(const std::uint64_t &pcl_stamp)
 {
   rclcpp::Time stamp;
   fromPCL(pcl_stamp, stamp);
   return stamp;
-}
-
-void fromPCL(const std::uint64_t &pcl_stamp, rclcpp::Time &stamp)
-{
-  stamp = rclcpp::Time(pcl_stamp * 1000ull); // Convert from us to ns
 }
 
 void fromPCL(const pcl::PCLHeader &pcl_header, std_msgs::msg::Header &header)
