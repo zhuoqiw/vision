@@ -27,10 +27,10 @@
 #include "pcl/filters/extract_indices.h"
 #include "pcl/segmentation/sac_segmentation.h"
 #include "pcl/sample_consensus/sac_model_plane.h"
-#include <pcl/conversions.h>
-#include <pcl/PCLPointField.h>
-#include <pcl/PCLPointCloud2.h>
-#include <pcl/PCLHeader.h>
+#include "pcl/conversions.h"
+#include "pcl/PCLPointField.h"
+#include "pcl/PCLPointCloud2.h"
+#include "pcl/PCLHeader.h"
 
 namespace point_cloud_analyse
 {
@@ -43,7 +43,8 @@ void toPCL(const sensor_msgs::msg::PointField &pf, pcl::PCLPointField &pcl_pf)
   pcl_pf.count = pf.count;
 }
 
-void toPCL(const std::vector<sensor_msgs::msg::PointField> &pfs, std::vector<pcl::PCLPointField> &pcl_pfs)
+void toPCL(const std::vector<sensor_msgs::msg::PointField> &pfs,
+  std::vector<pcl::PCLPointField> &pcl_pfs)
 {
   pcl_pfs.resize(pfs.size());
   std::vector<sensor_msgs::msg::PointField>::const_iterator it = pfs.begin();
@@ -69,7 +70,8 @@ void toPCL(const std_msgs::msg::Header &header, pcl::PCLHeader &pcl_header)
   pcl_header.frame_id = header.frame_id;
 }
 
-void copyPointCloud2MetaData(const sensor_msgs::msg::PointCloud2 &pc2, pcl::PCLPointCloud2 &pcl_pc2)
+void copyPointCloud2MetaData(const sensor_msgs::msg::PointCloud2 &pc2,
+  pcl::PCLPointCloud2 &pcl_pc2)
 {
   toPCL(pc2.header, pcl_pc2.header);
   pcl_pc2.height = pc2.height;

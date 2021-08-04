@@ -18,13 +18,14 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
-#include <pcl/point_cloud.h>
-#include <pcl/impl/point_types.hpp>
-#include <pcl/conversions.h>
-#include <pcl/PCLPointField.h>
-#include <pcl/PCLPointCloud2.h>
-#include <pcl/PCLHeader.h>
+#include "pcl/point_cloud.h"
+#include "pcl/impl/point_types.hpp"
+#include "pcl/conversions.h"
+#include "pcl/PCLPointField.h"
+#include "pcl/PCLPointCloud2.h"
+#include "pcl/PCLHeader.h"
 
 namespace point_cloud_collect
 {
@@ -37,7 +38,8 @@ void toPCL(const sensor_msgs::msg::PointField &pf, pcl::PCLPointField &pcl_pf)
   pcl_pf.count = pf.count;
 }
 
-void toPCL(const std::vector<sensor_msgs::msg::PointField> &pfs, std::vector<pcl::PCLPointField> &pcl_pfs)
+void toPCL(const std::vector<sensor_msgs::msg::PointField> &pfs,
+  std::vector<pcl::PCLPointField> &pcl_pfs)
 {
   pcl_pfs.resize(pfs.size());
   std::vector<sensor_msgs::msg::PointField>::const_iterator it = pfs.begin();
@@ -91,7 +93,7 @@ void moveFromROSMsg(sensor_msgs::msg::PointCloud2 &cloud, pcl::PointCloud<T> &pc
 
 void fromPCL(const std::uint64_t &pcl_stamp, rclcpp::Time &stamp)
 {
-  stamp = rclcpp::Time(pcl_stamp * 1000ull); // Convert from us to ns
+  stamp = rclcpp::Time(pcl_stamp * 1000ull);  // Convert from us to ns
 }
 
 rclcpp::Time fromPCL(const std::uint64_t &pcl_stamp)
@@ -115,7 +117,8 @@ void fromPCL(const pcl::PCLPointField &pcl_pf, sensor_msgs::msg::PointField &pf)
   pf.count = pcl_pf.count;
 }
 
-void fromPCL(const std::vector<pcl::PCLPointField> &pcl_pfs, std::vector<sensor_msgs::msg::PointField> &pfs)
+void fromPCL(const std::vector<pcl::PCLPointField> &pcl_pfs,
+  std::vector<sensor_msgs::msg::PointField> &pfs)
 {
   pfs.resize(pcl_pfs.size());
   std::vector<pcl::PCLPointField>::const_iterator it = pcl_pfs.begin();
@@ -125,7 +128,8 @@ void fromPCL(const std::vector<pcl::PCLPointField> &pcl_pfs, std::vector<sensor_
   }
 }
 
-void copyPCLPointCloud2MetaData(const pcl::PCLPointCloud2 &pcl_pc2, sensor_msgs::msg::PointCloud2 &pc2)
+void copyPCLPointCloud2MetaData(const pcl::PCLPointCloud2 &pcl_pc2,
+  sensor_msgs::msg::PointCloud2 &pc2)
 {
   fromPCL(pcl_pc2.header, pc2.header);
   pc2.height = pcl_pc2.height;
