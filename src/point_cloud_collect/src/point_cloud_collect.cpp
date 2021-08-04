@@ -19,7 +19,10 @@
 #include <string>
 #include <utility>
 
+#include <pcl/conversions.h>
 #include <pcl/PCLPointField.h>
+#include <pcl/PCLPointCloud2.h>
+#include <pcl/PCLHeader.h>
 
 namespace point_cloud_collect
 {

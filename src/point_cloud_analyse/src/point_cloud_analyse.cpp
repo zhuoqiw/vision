@@ -27,6 +27,10 @@
 #include "pcl/filters/extract_indices.h"
 #include "pcl/segmentation/sac_segmentation.h"
 #include "pcl/sample_consensus/sac_model_plane.h"
+#include <pcl/conversions.h>
+#include <pcl/PCLPointField.h>
+#include <pcl/PCLPointCloud2.h>
+#include <pcl/PCLHeader.h>
 
 namespace point_cloud_analyse
 {
