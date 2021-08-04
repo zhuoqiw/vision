@@ -55,6 +55,7 @@ RUN apt-get update && apt-get install -y \
   libboost-iostreams-dev \
   libboost-system-dev \
   libflann-dev \
+  ros-galactic-pcl-conversions \
   && rm -rf /var/lib/apt/lists/*
 
 # Install pcl
