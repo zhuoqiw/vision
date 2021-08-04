@@ -20,7 +20,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(sensor_msgs REQUIRED)
-find_package(PCL 1.3 REQUIRED COMPONENTS common)
+find_package(PCL REQUIRED)
 
 add_library(point_cloud_collect SHARED src/point_cloud_collect.cpp)
 

@@ -19,10 +19,105 @@
 #include <string>
 #include <utility>
 
-#include "pcl_conversions/pcl_conversions.h"
-
 namespace point_cloud_collect
 {
+
+void toPCL(const sensor_msgs::msg::PointField &pf, pcl::PCLPointField &pcl_pf)
+{
+  pcl_pf.name = pf.name;
+  pcl_pf.offset = pf.offset;
+  pcl_pf.datatype = pf.datatype;
+  pcl_pf.count = pf.count;
+}
+
+void toPCL(const rclcpp::Time &stamp, std::uint64_t &pcl_stamp)
+{
+  pcl_stamp = stamp.nanoseconds() / 1000ull;  // Convert from ns to us
+}
+
+void toPCL(const std_msgs::msg::Header &header, pcl::PCLHeader &pcl_header)
+{
+  toPCL(header.stamp, pcl_header.stamp);
+  // TODO(clalancette): Seq doesn't exist in the ROS2 header
+  // anymore.  wjwwood suggests that we might be able to get this
+  // information from the middleware in the future, but for now we
+  // just set it to 0.
+  pcl_header.seq = 0;
+  pcl_header.frame_id = header.frame_id;
+}
+
+void copyPointCloud2MetaData(const sensor_msgs::msg::PointCloud2 &pc2, pcl::PCLPointCloud2 &pcl_pc2)
+{
+  toPCL(pc2.header, pcl_pc2.header);
+  pcl_pc2.height = pc2.height;
+  pcl_pc2.width = pc2.width;
+  toPCL(pc2.fields, pcl_pc2.fields);
+  pcl_pc2.is_bigendian = pc2.is_bigendian;
+  pcl_pc2.point_step = pc2.point_step;
+  pcl_pc2.row_step = pc2.row_step;
+  pcl_pc2.is_dense = pc2.is_dense;
+}
+
+void moveToPCL(sensor_msgs::msg::PointCloud2 &pc2, pcl::PCLPointCloud2 &pcl_pc2)
+{
+  copyPointCloud2MetaData(pc2, pcl_pc2);
+  pcl_pc2.data.swap(pc2.data);
+}
+
+template<typename T>
+void moveFromROSMsg(sensor_msgs::msg::PointCloud2 &cloud, pcl::PointCloud<T> &pcl_cloud)
+{
+  pcl::PCLPointCloud2 pcl_pc2;
+  moveToPCL(cloud, pcl_pc2);
+  pcl::fromPCLPointCloud2(pcl_pc2, pcl_cloud);
+}
+
+rclcpp::Time fromPCL(const std::uint64_t &pcl_stamp)
+{
+  rclcpp::Time stamp;
+  fromPCL(pcl_stamp, stamp);
+  return stamp;
+}
+
+void fromPCL(const pcl::PCLHeader &pcl_header, std_msgs::msg::Header &header)
+{
+  header.stamp = fromPCL(pcl_header.stamp);
+  header.frame_id = pcl_header.frame_id;
+}
+
+void fromPCL(const pcl::PCLPointField &pcl_pf, sensor_msgs::msg::PointField &pf)
+{
+  pf.name = pcl_pf.name;
+  pf.offset = pcl_pf.offset;
+  pf.datatype = pcl_pf.datatype;
+  pf.count = pcl_pf.count;
+}
+
+void copyPCLPointCloud2MetaData(const pcl::PCLPointCloud2 &pcl_pc2, sensor_msgs::msg::PointCloud2 &pc2)
+{
+  fromPCL(pcl_pc2.header, pc2.header);
+  pc2.height = pcl_pc2.height;
+  pc2.width = pcl_pc2.width;
+  fromPCL(pcl_pc2.fields, pc2.fields);
+  pc2.is_bigendian = pcl_pc2.is_bigendian;
+  pc2.point_step = pcl_pc2.point_step;
+  pc2.row_step = pcl_pc2.row_step;
+  pc2.is_dense = pcl_pc2.is_dense;
+}
+
+void moveFromPCL(pcl::PCLPointCloud2 &pcl_pc2, sensor_msgs::msg::PointCloud2 &pc2)
+{
+  copyPCLPointCloud2MetaData(pcl_pc2, pc2);
+  pc2.data.swap(pcl_pc2.data);
+}
+
+template<typename T>
+void toROSMsg(const pcl::PointCloud<T> &pcl_cloud, sensor_msgs::msg::PointCloud2 &cloud)
+{
+  pcl::PCLPointCloud2 pcl_pc2;
+  pcl::toPCLPointCloud2(pcl_cloud, pcl_pc2);
+  pcl_conversions::moveFromPCL(pcl_pc2, cloud);
+}
 
 class PointCloudCollect::_Impl
 {
@@ -77,7 +172,7 @@ private:
   {
     if (ptr->width != 0) {
       pcl::PointCloud<pcl::PointXYZI> cloud;
-      pcl::moveFromROSMsg(*ptr, cloud);
+      moveFromROSMsg(*ptr, cloud);
       *_cloud += cloud;
     }
   }
@@ -108,7 +203,7 @@ private:
 
   void _InitializeParameters()
   {
-    _node->declare_parameter("frame_id");
+    _node->declare_parameter("frame_id", _frameID);
   }
 
   void _UpdateParameters()
