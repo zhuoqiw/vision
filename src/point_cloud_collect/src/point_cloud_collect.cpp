@@ -19,6 +19,8 @@
 #include <string>
 #include <utility>
 
+#include <pcl/PCLPointField.h>
+
 namespace point_cloud_collect
 {
 
