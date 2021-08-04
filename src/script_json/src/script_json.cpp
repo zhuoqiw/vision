@@ -14,11 +14,12 @@
 
 #include "script_json/script_json.hpp"
 
-#include <nlohmann/json.hpp>
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+#include "nlohmann/json.hpp"
 
 namespace script_json
 {
