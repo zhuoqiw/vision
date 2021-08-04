@@ -38,7 +38,8 @@ void toPCL(const sensor_msgs::msg::PointField & pf, pcl::PCLPointField & pcl_pf)
   pcl_pf.count = pf.count;
 }
 
-void toPCL(const std::vector<sensor_msgs::msg::PointField> & pfs,
+void toPCL(
+  const std::vector<sensor_msgs::msg::PointField> & pfs,
   std::vector<pcl::PCLPointField> & pcl_pfs)
 {
   pcl_pfs.resize(pfs.size());
@@ -65,7 +66,8 @@ void toPCL(const std_msgs::msg::Header & header, pcl::PCLHeader & pcl_header)
   pcl_header.frame_id = header.frame_id;
 }
 
-void copyPointCloud2MetaData(const sensor_msgs::msg::PointCloud2 & pc2,
+void copyPointCloud2MetaData(
+  const sensor_msgs::msg::PointCloud2 & pc2,
   pcl::PCLPointCloud2 & pcl_pc2)
 {
   toPCL(pc2.header, pcl_pc2.header);
@@ -118,7 +120,8 @@ void fromPCL(const pcl::PCLPointField & pcl_pf, sensor_msgs::msg::PointField & p
   pf.count = pcl_pf.count;
 }
 
-void fromPCL(const std::vector<pcl::PCLPointField> & pcl_pfs,
+void fromPCL(
+  const std::vector<pcl::PCLPointField> & pcl_pfs,
   std::vector<sensor_msgs::msg::PointField> & pfs)
 {
   pfs.resize(pcl_pfs.size());
@@ -129,7 +132,8 @@ void fromPCL(const std::vector<pcl::PCLPointField> & pcl_pfs,
   }
 }
 
-void copyPCLPointCloud2MetaData(const pcl::PCLPointCloud2 & pcl_pc2,
+void copyPCLPointCloud2MetaData(
+  const pcl::PCLPointCloud2 & pcl_pc2,
   sensor_msgs::msg::PointCloud2 & pc2)
 {
   fromPCL(pcl_pc2.header, pc2.header);
