@@ -20,6 +20,7 @@
 #include <utility>
 
 #include <pcl/point_cloud.h>
+#include <pcl/impl/point_types.hpp>
 #include <pcl/conversions.h>
 #include <pcl/PCLPointField.h>
 #include <pcl/PCLPointCloud2.h>
