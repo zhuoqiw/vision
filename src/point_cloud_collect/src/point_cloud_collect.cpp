@@ -94,6 +94,11 @@ rclcpp::Time fromPCL(const std::uint64_t &pcl_stamp)
   return stamp;
 }
 
+void fromPCL(const std::uint64_t &pcl_stamp, rclcpp::Time &stamp)
+{
+  stamp = rclcpp::Time(pcl_stamp * 1000ull); // Convert from us to ns
+}
+
 void fromPCL(const pcl::PCLHeader &pcl_header, std_msgs::msg::Header &header)
 {
   header.stamp = fromPCL(pcl_header.stamp);
