@@ -61,7 +61,7 @@ RUN wget -O opencv.tar.gz https://github.com/opencv/opencv/archive/refs/tags/4.5
   && rm opencv.tar.gz \
   && cmake \
     -D CMAKE_BUILD_TYPE:STRING=Release \
-    -D CMAKE_INSTALL_PREFIX:STRING=/opt/opencv \
+    #-D CMAKE_INSTALL_PREFIX:STRING=/opt/opencv \
     -D BUILD_LIST:STRING=core,imgproc,calib3d \
     -D BUILD_TESTS:BOOL=OFF \
     -D BUILD_PERF_TESTS:BOOL=OFF \
@@ -137,6 +137,7 @@ RUN wget -O pcl.tar.gz https://github.com/PointCloudLibrary/pcl/archive/refs/tag
   && rm pcl.tar.gz \
   && cmake \
     -D CMAKE_BUILD_TYPE:STRING=Release \
+    #-D CMAKE_INSTALL_PREFIX:STRING=/opt/pcl \
     -D BUILD_2d:BOOL=ON \
     -D BUILD_CUDA:BOOL=OFF \
     -D BUILD_GPU:BOOL=OFF \
