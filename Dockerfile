@@ -44,7 +44,7 @@ RUN wget -O opencv.tar.gz https://github.com/opencv/opencv/archive/refs/tags/4.5
     -D WITH_LIBREALSENSE:BOOL=OFF \
     -D WITH_MFX:BOOL=OFF \
     -D WITH_NGRAPH:BOOL=OFF \
-    -D WITH_OFF \NX:BOOL=OFF \
+    -D WITH_ONNX:BOOL=OFF \
     -D WITH_OPENCL:BOOL=OFF \
     -D WITH_OPENCLAMDBLAS:BOOL=OFF \
     -D WITH_OPENCLAMDFFT:BOOL=OFF \
