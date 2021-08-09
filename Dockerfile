@@ -3,6 +3,7 @@ FROM ros:galactic
 # Install dependencies
 RUN apt-get update && apt-get install -y \
   wget \
+  libgpiod-dev \ #GPIO
   && rm -rf /var/lib/apt/lists/*
 
 RUN wget -O opencv.tar.gz https://github.com/opencv/opencv/archive/refs/tags/4.5.2.tar.gz \
