@@ -15,6 +15,7 @@ RUN wget -O opencv.tar.gz https://github.com/opencv/opencv/archive/refs/tags/4.5
     -D BUILD_TESTS:BOOL=OFF \
     -D BUILD_PERF_TESTS:BOOL=OFF \
     -D BUILD_EXAMPLES:BOOL=OFF \
+    -D BUILD_opencv_apps=OFF \
     -D WITH_1394:BOOL=OFF \
     -D WITH_ADE:BOOL=OFF \
     -D WITH_ARAVIS:BOOL=OFF \
