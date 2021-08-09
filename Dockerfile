@@ -63,18 +63,29 @@ RUN wget -O pcl.tar.gz https://github.com/PointCloudLibrary/pcl/archive/refs/tag
   && rm pcl.tar.gz \
   && cmake \
     -D CMAKE_BUILD_TYPE:STRING=Release \
+    -D BUILD_2d:BOOL=ON \
     -D BUILD_CUDA:BOOL=OFF \
     -D BUILD_GPU:BOOL=OFF \
     -D BUILD_apps:BOOL=OFF \
     -D BUILD_benchmarks:BOOL=OFF \
+    -D BUILD_common:BOOL=ON \
     -D BUILD_examples:BOOL=OFF \
+    -D BUILD_features:BOOL=ON \
+    -D BUILD_filters:BOOL=ON \
+    -D BUILD_geometry:BOOL=ON \
     -D BUILD_global_tests:BOOL=OFF \
     -D BUILD_io:BOOL=OFF \
+    -D BUILD_kdtree:BOOL=ON \
     -D BUILD_keypoints:BOOL=OFF \
+    -D BUILD_ml:BOOL=ON \
+    -D BUILD_octree:BOOL=ON \
     -D BUILD_outofcore:BOOL=OFF \
     -D BUILD_people:BOOL=OFF \
     -D BUILD_recognition:BOOL=OFF \
     -D BUILD_registration:BOOL=OFF \
+    -D BUILD_sample_consensus:BOOL=ON \
+    -D BUILD_search:BOOL=ON \
+    -D BUILD_segmentation:BOOL=ON \
     -D BUILD_simulation:BOOL=OFF \
     -D BUILD_stereo:BOOL=OFF \
     -D BUILD_surface:BOOL=OFF \
