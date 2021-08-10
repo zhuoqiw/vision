@@ -22,7 +22,7 @@ find_package(rclcpp_components REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(shared_interfaces REQUIRED)
-find_package(PCL REQUIRED)
+find_package(PCL 1.3 REQUIRED)
 
 add_library(point_cloud_analyse SHARED src/point_cloud_analyse.cpp)
 
