@@ -84,4 +84,4 @@ jobs:
       - name: Build
         run: /ros_entrypoint.sh colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
       - name: Test
-        run: /ros_entrypoint.sh colcon test --event-handlers console_direct+
+        run: /ros_entrypoint.sh colcon test --event-handlers console_direct+ --packages-skip motor motor_encoder inclinometer
