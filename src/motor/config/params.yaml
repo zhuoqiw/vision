@@ -1,0 +1,3 @@
+motor_node:
+  ros__parameters:
+    speed: 3200
