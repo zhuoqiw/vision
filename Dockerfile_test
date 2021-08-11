@@ -8,6 +8,6 @@ RUN /ros_entrypoint.sh \
 RUN /ros_entrypoint.sh \
   colcon test --base-paths /ws --event-handlers console_direct+ --packages-skip motor motor_encoder inclinometer
 
-RUN sed --in-place --expression \
-  '$isource "/ws/install/local_setup.bash"' \
-  /ros_entrypoint.sh
+#RUN sed --in-place --expression \
+#  '$isource "/ws/install/local_setup.bash"' \
+#  /ros_entrypoint.sh
