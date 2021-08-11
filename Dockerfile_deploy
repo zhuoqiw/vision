@@ -1,0 +1,12 @@
+FROM zhuoqiw/ros:latest AS build
+
+COPY . /ws
+
+WORKDIR /ws
+
+RUN /ros_entrypoint.sh colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+
+FROM ros:galactic
+
+COPY --from=build /opt/Galaxy_camera /opt/Galaxy_camera
+COPY --from=build /ws/install /ws/install
