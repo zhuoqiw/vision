@@ -4,10 +4,10 @@ COPY ./src /ws/src
 
 WORKDIR /ws
 
-RUN source /opt/ros/galactic/setup.sh \
+RUN . /opt/ros/galactic/setup.sh \
   && colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 
-RUN source /opt/ros/galactic/setup.sh \
+RUN . /opt/ros/galactic/setup.sh \
   && colcon test --event-handlers console_direct+ --packages-skip motor motor_encoder inclinometer
   
 RUN sed --in-place --expression \
