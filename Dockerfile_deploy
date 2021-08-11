@@ -2,7 +2,6 @@ FROM zhuoqiw/ros-build:latest AS build
 
 FROM ros:galactic
 
-COPY . /ws
 COPY --from=build /opt/Galaxy_camera /opt/Galaxy_camera
 COPY --from=build /opt/opencv /opt/opencv
 COPY --from=build /opt/pcl /opt/pcl
