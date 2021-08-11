@@ -8,6 +8,6 @@ COPY --from=build /opt/opencv /opt/opencv
 COPY --from=build /opt/pcl /opt/pcl
 
 # source entrypoint setup
-RUN sed --in-place --expression \
-  '$isource "/ws/install/setup.bash"' \
-  /ros_entrypoint.sh
+#RUN sed --in-place --expression \
+#  '$isource "/ws/install/setup.bash"' \
+#  /ros_entrypoint.sh

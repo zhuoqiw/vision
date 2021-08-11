@@ -106,6 +106,10 @@ jobs:
         with:
           name: my-artifact
       -
+        run: |
+          ls -l
+          pwd
+      -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       -
