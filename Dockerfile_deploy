@@ -4,7 +4,7 @@ COPY . /ws
 
 WORKDIR /ws
 
-RUN colcon build --cmake-args -D CMAKE_BUILD_TYPE=Release
+RUN /ros_entrypoint.sh colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 FROM ros:galactic
 
