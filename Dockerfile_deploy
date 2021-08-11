@@ -5,4 +5,4 @@ FROM ros:galactic
 COPY --from=test /opt/Galaxy_camera /opt/Galaxy_camera
 COPY --from=test /opt/opencv /opt/opencv
 COPY --from=test /opt/pcl /opt/pcl
-#COPY --from=test /ws/install /ws/install
+COPY --from=test /ws/install /ws/install
