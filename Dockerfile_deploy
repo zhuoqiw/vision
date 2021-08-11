@@ -1,1 +1,5 @@
-FROM zhuoqiw/ros:latest AS build
+FROM zhuoqiw/ros:latest
+
+COPY . /ws
+
+WORKDIR /ws
