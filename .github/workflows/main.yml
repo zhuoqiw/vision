@@ -80,17 +80,31 @@ jobs:
     container: 
       image: zhuoqiw/ros-build
     steps:
-      - name: Checkout
+      - 
+        name: Checkout
         uses: actions/checkout@v2
-      - name: Build
+      - 
+        name: Build
         run: /ros_entrypoint.sh colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
-      - name: Test
+      - 
+        name: Test
         run: /ros_entrypoint.sh colcon test --event-handlers console_direct+ --packages-skip motor motor_encoder inclinometer
+      -
+        name:  Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: install/
   deployment:
     name: Deployment
     needs: build-test-src
     runs-on: ubuntu-20.04
     steps:
+      -
+        name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
