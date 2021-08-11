@@ -73,7 +73,7 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-  build-ros-image:
+  deploy-ros-image:
     name: Deploy ros image
     needs: build-ros-image
     runs-on: ubuntu-20.04
