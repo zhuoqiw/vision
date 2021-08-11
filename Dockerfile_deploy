@@ -1,12 +1,7 @@
-FROM zhuoqiw/ros-build:latest AS build
+FROM zhuoqiw/ros-test:latest AS test
 
 FROM ros:galactic
 
-COPY --from=build /opt/Galaxy_camera /opt/Galaxy_camera
-COPY --from=build /opt/opencv /opt/opencv
-COPY --from=build /opt/pcl /opt/pcl
-
-# source entrypoint setup
-#RUN sed --in-place --expression \
-#  '$isource "/ws/install/setup.bash"' \
-#  /ros_entrypoint.sh
+COPY --from=test /opt/Galaxy_camera /opt/Galaxy_camera
+COPY --from=test /opt/opencv /opt/opencv
+COPY --from=test /opt/pcl /opt/pcl
