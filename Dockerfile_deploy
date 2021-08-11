@@ -3,3 +3,5 @@ FROM zhuoqiw/ros:latest
 COPY . /ws
 
 WORKDIR /ws
+
+RUN colcon build --cmake-args -D CMAKE_BUILD_TYPE=Release
