@@ -78,7 +78,7 @@ jobs:
     needs: build-ros-image
     runs-on: ubuntu-20.04
     container: 
-      image: zhuoqiw/ros
+      image: zhuoqiw/ros-build
     steps:
       - name: Checkout
         uses: actions/checkout@v2
