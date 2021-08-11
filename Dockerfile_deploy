@@ -1,7 +1,11 @@
-FROM zhuoqiw/ros:latest
+FROM zhuoqiw/ros:latest AS build
 
 COPY . /ws
 
 WORKDIR /ws
 
 RUN colcon build --cmake-args -D CMAKE_BUILD_TYPE=Release
+
+FROM ros:galactic
+
+COPY --from=build /ws/install /ws
