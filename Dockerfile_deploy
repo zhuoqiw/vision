@@ -8,4 +8,4 @@ COPY --from=test /opt/pcl /opt/pcl
 COPY --from=test /ws/install /ws/install
 COPY --from=test /ros_entrypoint.sh /ros_entrypoint.sh
 
-ENV LD_LIBRARY_PATH /opt/Galaxy_camera:/opt/opencv:/opt/pcl:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH /opt/opencv/lib:/opt/pcl/lib:$LD_LIBRARY_PATH
