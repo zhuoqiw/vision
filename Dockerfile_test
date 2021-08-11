@@ -4,12 +4,12 @@ COPY ./src /ws/src
 
 WORKDIR /ws
 
-RUN . /opt/ros/galactic/setup.sh \
-  && colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+RUN /ros_entrypoint.sh \
+  colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 
-RUN . /opt/ros/galactic/setup.sh \
-  && colcon test --event-handlers console_direct+ --packages-skip motor motor_encoder inclinometer
-  
+RUN /ros_entrypoint.sh \
+  colcon test --event-handlers console_direct+ --packages-skip motor motor_encoder inclinometer
+
 RUN sed --in-place --expression \
   '$isource "/ws/install/setup.bash"' \
   /ros_entrypoint.sh
