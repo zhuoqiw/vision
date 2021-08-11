@@ -1,4 +1,4 @@
-FROM zhuoqiw/ros:latest AS build
+FROM zhuoqiw/ros-build:latest AS build
 
 COPY . /ws
 
