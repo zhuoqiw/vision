@@ -2,14 +2,12 @@ FROM zhuoqiw/ros-build:latest
 
 COPY ./src /ws/src
 
-WORKDIR /ws
+RUN /ros_entrypoint.sh \
+  colcon build --base-paths /ws --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 RUN /ros_entrypoint.sh \
-  colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
-
-RUN /ros_entrypoint.sh \
-  colcon test --event-handlers console_direct+ --packages-skip motor motor_encoder inclinometer
+  colcon test --base-paths /ws --event-handlers console_direct+ --packages-skip motor motor_encoder inclinometer
 
 RUN sed --in-place --expression \
-  '$isource "/ws/install/setup.bash"' \
+  '$isource "/ws/install/local_setup.bash"' \
   /ros_entrypoint.sh
