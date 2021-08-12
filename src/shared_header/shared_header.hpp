@@ -197,14 +197,14 @@ void toROSMsg(const pcl::PointCloud<T> &pcl_cloud, sensor_msgs::msg::PointCloud2
 {
   pcl::PCLPointCloud2 pcl_pc2;
   pcl::toPCLPointCloud2(pcl_cloud, pcl_pc2);
-  pcl_conversions::moveFromPCL(pcl_pc2, cloud);
+  moveFromPCL(pcl_pc2, cloud);
 }
 
 template<typename T>
 void fromROSMsg(const sensor_msgs::msg::PointCloud2 &cloud, pcl::PointCloud<T> &pcl_cloud)
 {
   pcl::PCLPointCloud2 pcl_pc2;
-  pcl_conversions::toPCL(cloud, pcl_pc2);
+  toPCL(cloud, pcl_pc2);
   pcl::fromPCLPointCloud2(pcl_pc2, pcl_cloud);
 }
 
@@ -212,7 +212,7 @@ template<typename T>
 void moveFromROSMsg(sensor_msgs::msg::PointCloud2 &cloud, pcl::PointCloud<T> &pcl_cloud)
 {
   pcl::PCLPointCloud2 pcl_pc2;
-  pcl_conversions::moveToPCL(cloud, pcl_pc2);
+  moveToPCL(cloud, pcl_pc2);
   pcl::fromPCLPointCloud2(pcl_pc2, pcl_cloud);
 }
 
