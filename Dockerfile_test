@@ -1,0 +1,15 @@
+FROM zhuoqiw/ros-build:latest
+
+COPY ./src /ws/src
+
+WORKDIR /ws
+
+RUN /ros_entrypoint.sh \
+  colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+
+RUN /ros_entrypoint.sh \
+  colcon test --packages-skip motor motor_encoder inclinometer
+
+RUN sed --in-place --expression \
+  '$isource "/ws/install/local_setup.bash"' \
+  /ros_entrypoint.sh

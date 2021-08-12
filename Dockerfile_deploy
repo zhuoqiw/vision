@@ -1,12 +1,11 @@
-FROM zhuoqiw/ros:latest AS build
-
-COPY . /ws
-
-WORKDIR /ws
-
-RUN /ros_entrypoint.sh colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+FROM zhuoqiw/ros-test:latest AS test
 
 FROM ros:galactic
 
-COPY --from=build /opt/Galaxy_camera /opt/Galaxy_camera
-COPY --from=build /ws/install /ws/install
+COPY --from=test /opt/Galaxy_camera /opt/Galaxy_camera
+COPY --from=test /opt/opencv /opt/opencv
+COPY --from=test /opt/pcl /opt/pcl
+COPY --from=test /ws/install /ws/install
+COPY --from=test /ros_entrypoint.sh /ros_entrypoint.sh
+
+ENV LD_LIBRARY_PATH /opt/opencv/lib:/opt/pcl/lib:$LD_LIBRARY_PATH
