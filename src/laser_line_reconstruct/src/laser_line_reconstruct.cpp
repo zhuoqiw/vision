@@ -22,6 +22,12 @@
 #include <vector>
 
 #include "opencv2/opencv.hpp"
+#include "pcl/point_cloud.h"
+#include "pcl/impl/point_types.hpp"
+#include "pcl/conversions.h"
+#include "pcl/PCLPointField.h"
+#include "pcl/PCLPointCloud2.h"
+#include "pcl/PCLHeader.h"
 
 namespace laser_line_reconstruct
 {
