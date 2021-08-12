@@ -22,7 +22,7 @@ find_package(rclcpp_components REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(shared_interfaces REQUIRED)
 find_package(OpenCV REQUIRED)
-find_package(PCL 1.3 REQUIRED COMPONENTS common)
+find_package(PCL 1.3 REQUIRED)
 
 add_library(laser_line_reconstruct SHARED src/laser_line_reconstruct.cpp)
 
