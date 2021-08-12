@@ -3,7 +3,7 @@ FROM zhuoqiw/ros-test:latest AS test
 FROM ros:galactic
 
 COPY --from=test /opt/Galaxy_camera/lib/*/* /usr/lib/
-COPY --from=test /opt/opencv /opt/opencv
-COPY --from=test /opt/pcl /opt/pcl
+COPY --from=test /opt/opencv/lib/* /usr/lib/
+COPY --from=test /opt/pcl/lib/* /usr/lib/
 COPY --from=test /ws/install /ws/install
 COPY --from=test /ros_entrypoint.sh /ros_entrypoint.sh
