@@ -93,14 +93,13 @@ find_package_handle_standard_args(GALAXY
   VERSION_VAR GALAXY_VERSION
 )
 
-get_filename_component(GALAXY_LIBRARY_PATH "${GALAXY_LIBRARY}" DIRECTORY)
-
 # Setup import target which can be utilized by target_link_libraries
 if(GALAXY_FOUND AND NOT TARGET GALAXY::GALAXY)
-  add_library(GALAXY::GALAXY UNKNOWN IMPORTED)
+  add_library(GALAXY::GALAXY SHARED IMPORTED)
   set_target_properties(GALAXY::GALAXY PROPERTIES
     INTERFACE_INCLUDE_DIRECTORIES "${GALAXY_INCLUDE_DIR}"
     IMPORTED_LOCATION "${GALAXY_LIBRARY}"
+    IMPORTED_NO_SONAME TRUE
   )
 endif()
 
