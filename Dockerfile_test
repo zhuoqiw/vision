@@ -9,7 +9,3 @@ RUN /ros_entrypoint.sh \
 
 RUN /ros_entrypoint.sh \
   colcon test --packages-skip motor motor_encoder inclinometer
-
-RUN sed --in-place --expression \
-  '$isource "/ws/install/local_setup.bash"' \
-  /ros_entrypoint.sh
