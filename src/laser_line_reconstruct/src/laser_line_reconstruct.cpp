@@ -308,7 +308,7 @@ private:
       }
 
       auto ptr = std::make_unique<PointCloud2>();
-      pcl::toROSMsg(cloud, *ptr);
+      toROSMsg(cloud, *ptr);
       ptr->header.stamp = ptrL->header.stamp;
       ptr->header.frame_id = _frameID;
       return ptr;
