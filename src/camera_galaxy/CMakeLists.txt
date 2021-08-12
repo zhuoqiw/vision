@@ -25,8 +25,6 @@ find_package(sensor_msgs REQUIRED)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" CMAKE_MODULE_PATH)
 find_package(GALAXY REQUIRED)
 
-message(STATUS "${GALAXY_LIBRARY_PATH}")
-
 add_library(camera_galaxy
   SHARED src/camera_galaxy.cpp
 )
