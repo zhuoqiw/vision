@@ -67,5 +67,5 @@ RUN wget -O pcl.tar.gz https://github.com/PointCloudLibrary/pcl/archive/refs/tag
     -D WITH_VTK:BOOL=OFF \
     -S pcl-pcl-1.12.0/ \
     -B build/ \
-  && cmake --build build/ --target install
+  && cmake --build build/ --target install \
   && rm -r pcl-pcl-1.12.0 build
