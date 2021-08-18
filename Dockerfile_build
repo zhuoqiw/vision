@@ -18,11 +18,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install daheng galaxy
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
-  wget -O galaxy.tar.gz http://gb.daheng-imaging.com/CN/Software/Cameras/Linux/Galaxy_Linux-x86_Gige-U3_32bits-64bits_1.2.2106.9091.tar.gz \
+  wget -O galaxy.tar.gz http://gb.daheng-imaging.com/EN/Software/Cameras/Linux/Galaxy_Linux-x86_Gige-U3_32bits-64bits_1.2.2107.9261.tar.gz \
   && tar -xzf galaxy.tar.gz \
   && rm galaxy.tar.gz \
-  && (printf "\nY\nEn\n" && cat) | ./Galaxy_Linux-x86_Gige-U3_32bits-64bits_1.2.2106.9091/Galaxy_camera.run \
-  && rm -r Galaxy_Linux-x86_Gige-U3_32bits-64bits_1.2.2106.9091 \
+  && (printf "\nY\nEn\n" && cat) | ./Galaxy_Linux-x86_Gige-U3_32bits-64bits_1.2.2107.9261/Galaxy_camera.run \
+  && rm -r Galaxy_Linux-x86_Gige-U3_32bits-64bits_1.2.2107.9261 \
+  && mv Galaxy_camera/ /opt/; fi
+
+RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
+  wget -O galaxy.tar.gz http://gb.daheng-imaging.com/EN/Software/Cameras/Linux/Galaxy_Linux-armhf_Gige-U3_32bits-64bits_1.3.2107.9261.tar.gz \
+  && tar -xzf galaxy.tar.gz \
+  && rm galaxy.tar.gz \
+  && (printf "\nY\nEn\n" && cat) | ./Galaxy_Linux-armhf_Gige-U3_32bits-64bits_1.3.2107.9261/Galaxy_camera.run \
+  && rm -r Galaxy_Linux-armhf_Gige-U3_32bits-64bits_1.3.2107.9261 \
   && mv Galaxy_camera/ /opt/; fi
 
 # Install nlohmann json
@@ -191,3 +199,4 @@ RUN wget -O pcl.tar.gz https://github.com/PointCloudLibrary/pcl/archive/refs/tag
     -B build/ \
   && cmake --build build/ --target install \
   && rm -r pcl-pcl-1.12.0 build
+
