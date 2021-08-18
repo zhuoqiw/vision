@@ -1,6 +1,6 @@
-FROM zhuoqiw/ros-opencv:latest AS opencv
+FROM zhuoqiw/ros:opencv AS opencv
 
-FROM zhuoqiw/ros-pcl:latest AS pcl
+FROM zhuoqiw/ros:pcl AS pcl
 
 FROM ros:galactic
 
@@ -65,7 +65,7 @@ RUN wget -O paho.mqtt.cpp.tar.gz https://github.com/eclipse/paho.mqtt.cpp/archiv
   && rm -r paho.mqtt.cpp-1.2.0 build
 
 # Install opencv
-COPY --from=opencv /opt/opencv/lib /opt/opencv/lib
+COPY --from=opencv /opt/opencv /opt/opencv
 
 # Install pcl
-COPY --from=pcl /opt/pcl/lib /opt/pcl/lib
+COPY --from=pcl /opt/pcl /opt/pcl

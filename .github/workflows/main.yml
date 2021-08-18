@@ -27,7 +27,7 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v9
         with:
-          files: Dockerfile_opencv
+          files: Dockerfile/ros_opencv
       -
         name: Set up QEMU
         if: steps.changed-files.outputs.any_changed == 'true'
@@ -49,10 +49,10 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: Dockerfile_opencv
+          file: Dockerfile/ros_opencv
           platforms: linux/amd64
           push: true
-          tags: zhuoqiw/ros-opencv
+          tags: zhuoqiw/ros:opencv
   build-ros-pcl:
     name: Build ros pcl
     runs-on: ubuntu-20.04
@@ -67,7 +67,7 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v9
         with:
-          files: Dockerfile_pcl
+          files: Dockerfile/ros_pcl
       -
         name: Set up QEMU
         if: steps.changed-files.outputs.any_changed == 'true'
@@ -89,10 +89,10 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: Dockerfile_pcl
+          file: Dockerfile/ros_pcl
           platforms: linux/amd64
           push: true
-          tags: zhuoqiw/ros-pcl
+          tags: zhuoqiw/ros:pcl
   build-ros-image:
     name: Build ros image
     needs: [build-ros-opencv, build-ros-pcl]
@@ -109,9 +109,9 @@ jobs:
         uses: tj-actions/changed-files@v9
         with:
           files: |
-            Dockerfile_opencv
-            Dockerfile_pcl
-            Dockerfile_build
+            Dockerfile/ros_opencv
+            Dockerfile/ros_pcl
+            Dockerfile/ros_build
       -
         name: Set up QEMU
         if: steps.changed-files.outputs.any_changed == 'true'
@@ -133,10 +133,10 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: Dockerfile_build
+          file: Dockerfile/ros_build
           platforms: linux/amd64
           push: true
-          tags: zhuoqiw/ros-build
+          tags: zhuoqiw/ros:build
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
   test-ros-image:
@@ -160,10 +160,10 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: Dockerfile_test
+          file: Dockerfile/ros_test
           platforms: linux/amd64
           push: true
-          tags: zhuoqiw/ros-test
+          tags: zhuoqiw/ros:test
   deploy-ros-image:
     name: Deploy ros image
     needs: test-ros-image
@@ -185,7 +185,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: Dockerfile_deploy
+          file: Dockerfile/ros:deploy
           platforms: linux/amd64
           push: true
           tags: zhuoqiw/ros-deploy
