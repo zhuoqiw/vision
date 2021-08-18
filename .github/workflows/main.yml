@@ -27,7 +27,7 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v9
         with:
-          files: Dockerfile_opencv
+          files: Dockerfile/ros_opencv
       -
         name: Set up QEMU
         if: steps.changed-files.outputs.any_changed == 'true'
@@ -67,7 +67,7 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v9
         with:
-          files: Dockerfile_pcl
+          files: Dockerfile/ros_pcl
       -
         name: Set up QEMU
         if: steps.changed-files.outputs.any_changed == 'true'
@@ -109,9 +109,9 @@ jobs:
         uses: tj-actions/changed-files@v9
         with:
           files: |
-            Dockerfile_opencv
-            Dockerfile_pcl
-            Dockerfile_build
+            Dockerfile/ros_opencv
+            Dockerfile/ros_pcl
+            Dockerfile/ros_build
       -
         name: Set up QEMU
         if: steps.changed-files.outputs.any_changed == 'true'
@@ -160,7 +160,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: Dockerfile_test
+          file: Dockerfile/ros_test
           platforms: linux/amd64
           push: true
           tags: zhuoqiw/ros-test
@@ -185,7 +185,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: Dockerfile_deploy
+          file: Dockerfile/ros_deploy
           platforms: linux/amd64
           push: true
           tags: zhuoqiw/ros-deploy
