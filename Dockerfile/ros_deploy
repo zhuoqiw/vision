@@ -1,4 +1,4 @@
-FROM zhuoqiw/ros-test:latest AS test
+FROM zhuoqiw/ros:test AS test
 
 FROM ros:galactic
 

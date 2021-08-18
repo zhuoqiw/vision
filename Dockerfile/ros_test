@@ -1,4 +1,4 @@
-FROM zhuoqiw/ros-build:latest
+FROM zhuoqiw/ros:build
 
 COPY ./src /ws/src
 
