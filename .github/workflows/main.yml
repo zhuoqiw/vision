@@ -52,7 +52,7 @@ jobs:
           file: Dockerfile/ros_opencv
           platforms: linux/amd64
           push: true
-          tags: zhuoqiw/ros-opencv
+          tags: zhuoqiw/ros:opencv
   build-ros-pcl:
     name: Build ros pcl
     runs-on: ubuntu-20.04
@@ -92,7 +92,7 @@ jobs:
           file: Dockerfile/ros_pcl
           platforms: linux/amd64
           push: true
-          tags: zhuoqiw/ros-pcl
+          tags: zhuoqiw/ros:pcl
   build-ros-image:
     name: Build ros image
     needs: [build-ros-opencv, build-ros-pcl]
@@ -136,7 +136,7 @@ jobs:
           file: Dockerfile/ros_build
           platforms: linux/amd64
           push: true
-          tags: zhuoqiw/ros-build
+          tags: zhuoqiw/ros:build
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
   test-ros-image:
@@ -163,7 +163,7 @@ jobs:
           file: Dockerfile/ros_test
           platforms: linux/amd64
           push: true
-          tags: zhuoqiw/ros-test
+          tags: zhuoqiw/ros:test
   deploy-ros-image:
     name: Deploy ros image
     needs: test-ros-image
@@ -185,7 +185,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: Dockerfile/ros_deploy
+          file: Dockerfile/ros:deploy
           platforms: linux/amd64
           push: true
           tags: zhuoqiw/ros-deploy
