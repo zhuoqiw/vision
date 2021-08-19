@@ -5,7 +5,7 @@ COPY ./src /ws/src
 WORKDIR /ws
 
 RUN /ros_entrypoint.sh \
-  colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release -DPCL_DIR=/opt/pcl/share/pcl-1.12/
+  colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 RUN /ros_entrypoint.sh \
   colcon test --packages-skip motor motor_encoder inclinometer
