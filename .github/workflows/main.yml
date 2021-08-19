@@ -13,8 +13,8 @@ defaults:
     shell: bash
 
 jobs:
-  build-ros-temp:
-    name: Build ros temp
+  build-ros-galaxy:
+    name: Build ros galaxy
     runs-on: ubuntu-20.04
     steps:
       -
@@ -27,7 +27,7 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v9
         with:
-          files: Dockerfile/ros_temp
+          files: Dockerfile/ros_galaxy
       -
         name: Set up QEMU
         if: steps.changed-files.outputs.any_changed == 'true'
@@ -49,10 +49,10 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: Dockerfile/ros_temp
-          platforms: linux/arm64
+          file: Dockerfile/ros_galaxy
+          platforms: linux/amd64
           push: true
-          tags: zhuoqiw/ros:temp
+          tags: zhuoqiw/ros:galaxy
   build-ros-opencv:
     name: Build ros opencv
     runs-on: ubuntu-20.04
@@ -135,7 +135,7 @@ jobs:
           tags: zhuoqiw/ros:pcl
   build-ros-image:
     name: Build ros image
-    needs: [build-ros-opencv, build-ros-pcl]
+    needs: [build-ros-galaxy, build-ros-opencv, build-ros-pcl]
     runs-on: ubuntu-20.04
     steps:
       -
@@ -149,6 +149,7 @@ jobs:
         uses: tj-actions/changed-files@v9
         with:
           files: |
+            Dockerfile/ros_galaxy
             Dockerfile/ros_opencv
             Dockerfile/ros_pcl
             Dockerfile/ros_build

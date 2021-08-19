@@ -1,42 +1,15 @@
 FROM zhuoqiw/ros:opencv AS opencv
 
-FROM zhuoqiw/ros:pcl AS pcl
+FROM zhuoqiw/ros:galaxy AS galaxy
 
-FROM ros:galactic
-
-# linux/amd64 or linux/arm64
-ARG TARGETPLATFORM
+FROM zhuoqiw/ros:pcl
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
   wget \
   # GPIO
   libgpiod-dev \
-  # PCL dependencies
-  libboost-dev \
-  libboost-filesystem-dev \
-  libboost-date-time-dev \
-  libboost-iostreams-dev \
-  libboost-system-dev \
-  libflann-dev \
   && rm -rf /var/lib/apt/lists/*
-
-# Install daheng galaxy
-RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
-  wget -O galaxy.tar.gz http://gb.daheng-imaging.com/EN/Software/Cameras/Linux/Galaxy_Linux-x86_Gige-U3_32bits-64bits_1.2.2107.9261.tar.gz \
-  && tar -xzf galaxy.tar.gz \
-  && rm galaxy.tar.gz \
-  && (printf "\nY\nEn\n" && cat) | ./Galaxy_Linux-x86_Gige-U3_32bits-64bits_1.2.2107.9261/Galaxy_camera.run \
-  && rm -r Galaxy_Linux-x86_Gige-U3_32bits-64bits_1.2.2107.9261 \
-  && mv Galaxy_camera/ /opt/; fi
-
-RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
-  wget -O galaxy.tar.gz http://gb.daheng-imaging.com/EN/Software/Cameras/Linux/Galaxy_Linux-armhf_Gige-U3_32bits-64bits_1.3.2107.9261.tar.gz \
-  && tar -xzf galaxy.tar.gz \
-  && rm galaxy.tar.gz \
-  && (printf "\nY\nEn\n" && cat) | ./Galaxy_Linux-armhf_Gige-U3_32bits-64bits_1.3.2107.9261/Galaxy_camera.run \
-  && rm -r Galaxy_Linux-armhf_Gige-U3_32bits-64bits_1.3.2107.9261 \
-  && mv Galaxy_camera/ /opt/; fi
 
 # Install nlohmann json
 RUN wget https://github.com/nlohmann/json/releases/download/v3.9.1/json.hpp \
@@ -74,5 +47,5 @@ RUN wget -O paho.mqtt.cpp.tar.gz https://github.com/eclipse/paho.mqtt.cpp/archiv
 # Install opencv
 COPY --from=opencv /opt/opencv /opt/opencv
 
-# Install pcl
-COPY --from=pcl /opt/pcl /opt/pcl
+# Install galaxy
+COPY --from=galaxy /opt/Galaxy_camera /opt/Galaxy_camera
