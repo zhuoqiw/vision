@@ -12,6 +12,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   wget \
   # GPIO
   libgpiod-dev \
+  # PCL dependencies
+  libboost-dev \
+  libboost-filesystem-dev \
+  libboost-date-time-dev \
+  libboost-iostreams-dev \
+  libboost-system-dev \
+  libflann-dev \
   && rm -rf /var/lib/apt/lists/*
 
 # Install daheng galaxy
