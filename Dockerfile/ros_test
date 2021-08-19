@@ -4,6 +4,8 @@ COPY ./src /ws/src
 
 WORKDIR /ws
 
+COPY /opt/Galaxy_camera/lib/*/*.cti /opt/Galaxy_camera/lib/*/*.so /opt/Galaxy_camera/lib/
+ 
 RUN /ros_entrypoint.sh \
   colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 

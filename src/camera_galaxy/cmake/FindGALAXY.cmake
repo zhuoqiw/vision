@@ -75,6 +75,7 @@ endif()
 # Find the specific libary
 find_library(GALAXY_LIBRARY
   NAMES "gxiapi"
+  HINTS "/opt/Galaxy_camera/lib/"
   DOC "The path to the GxIAPI library file."
 )
 
