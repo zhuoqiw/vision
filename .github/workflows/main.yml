@@ -13,6 +13,46 @@ defaults:
     shell: bash
 
 jobs:
+  build-ros-temp:
+    name: Build ros temp
+    runs-on: ubuntu-20.04
+    steps:
+      -
+        name: Check out repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      -
+        name: Get specific changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v9
+        with:
+          files: Dockerfile/ros_temp
+      -
+        name: Set up QEMU
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER_NAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      -
+        name: Build and push
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile/ros_temp
+          platforms: linux/arm64
+          push: true
+          tags: zhuoqiw/ros:temp
   build-ros-opencv:
     name: Build ros opencv
     runs-on: ubuntu-20.04
