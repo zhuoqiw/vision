@@ -27,7 +27,7 @@ target_include_directories(mqtt_ros PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOU
 
 ament_target_dependencies(mqtt_ros rclcpp rclcpp_components)
 
-target_link_libraries(mqtt_ros PahoMqttCpp::paho-mqttpp3-static)
+target_link_libraries(mqtt_ros PahoMqttCpp::paho-mqttpp3)
 
 rclcpp_components_register_node(mqtt_ros PLUGIN "mqtt_ros::MqttRos" EXECUTABLE mqtt_ros_node)
 
