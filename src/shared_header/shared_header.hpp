@@ -15,6 +15,7 @@
 #ifndef SHARED_HEADER__SHARED_HEADER_HPP_
 #define SHARED_HEADER__SHARED_HEADER_HPP_
 
+#include "pcl/common/common.h"
 #include "pcl/point_cloud.h"
 #include "pcl/impl/point_types.hpp"
 #include "pcl/conversions.h"

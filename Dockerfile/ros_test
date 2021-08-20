@@ -3,7 +3,7 @@ FROM zhuoqiw/ros:build
 COPY ./src /ws/src
 
 WORKDIR /ws
-
+ 
 RUN /ros_entrypoint.sh \
   colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 

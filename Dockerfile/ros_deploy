@@ -2,11 +2,10 @@ FROM zhuoqiw/ros:test AS test
 
 FROM ros:galactic
 
-COPY --from=test /usr/lib/libgxiapi.so /usr/lib/GxGVTL.cti /usr/lib/GxU3VTL.cti /opt/Galaxy_camera/lib/
+COPY --from=test /opt/galaxy/lib/ /opt/galaxy/lib/
 COPY --from=test /opt/opencv/lib /opt/opencv/lib
-COPY --from=test /opt/pcl/lib /opt/pcl/lib
 COPY --from=test /ws/install /ws/install
 
 RUN sed -i 's?opt/ros/$ROS_DISTRO?ws/install?g' ros_entrypoint.sh
 
-ENV LD_LIBRARY_PATH="/opt/Galaxy_camera/lib:/opt/opencv/lib:/opt/pcl/lib:$LD_LIBRARY_PATH"
+ENV LD_LIBRARY_PATH="/opt/galaxy/lib:/opt/opencv/lib:/opt/pcl/lib:$LD_LIBRARY_PATH"
