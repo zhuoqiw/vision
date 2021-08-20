@@ -48,5 +48,5 @@ RUN wget -O paho.mqtt.cpp.tar.gz https://github.com/eclipse/paho.mqtt.cpp/archiv
 COPY --from=opencv /opt/opencv /opt/opencv
 
 # Install galaxy
-COPY --from=galaxy /opt/Galaxy_camera /opt/Galaxy_camera
-RUN mv /opt/Galaxy_camera/lib/*/* /opt/Galaxy_camera/lib/
+COPY --from=galaxy /opt/Galaxy_camera /opt/galaxy
+RUN mv /opt/galaxy/lib/*/* /opt/galaxy/lib/
