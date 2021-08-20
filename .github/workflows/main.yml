@@ -50,7 +50,7 @@ jobs:
         with:
           context: .
           file: Dockerfile/ros_galaxy
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: zhuoqiw/ros:galaxy
   build-ros-opencv:
@@ -90,7 +90,7 @@ jobs:
         with:
           context: .
           file: Dockerfile/ros_opencv
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: zhuoqiw/ros:opencv
   build-ros-pcl:
@@ -130,7 +130,7 @@ jobs:
         with:
           context: .
           file: Dockerfile/ros_pcl
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: zhuoqiw/ros:pcl
   build-ros-image:
@@ -175,7 +175,7 @@ jobs:
         with:
           context: .
           file: Dockerfile/ros_build
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: zhuoqiw/ros:build
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -202,7 +202,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           file: Dockerfile/ros_test
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: zhuoqiw/ros:test
   deploy-ros-image:
@@ -227,6 +227,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           file: Dockerfile/ros_deploy
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: zhuoqiw/ros:deploy
