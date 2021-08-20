@@ -1,3 +1,4 @@
+# Compile opencv against ROS
 FROM ros:galactic
 
 # Install dependencies
