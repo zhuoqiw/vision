@@ -8,4 +8,4 @@ COPY --from=test /ws/install /ws/install
 
 RUN sed -i 's?opt/ros/$ROS_DISTRO?ws/install?g' ros_entrypoint.sh
 
-ENV LD_LIBRARY_PATH="/opt/Galaxy_camera/lib:/opt/opencv/lib:/opt/pcl/lib:$LD_LIBRARY_PATH"
+ENV LD_LIBRARY_PATH="/opt/galaxy/lib:/opt/opencv/lib:/opt/pcl/lib:$LD_LIBRARY_PATH"
