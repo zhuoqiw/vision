@@ -23,7 +23,7 @@ RUN wget -O paho.mqtt.c.tar.gz https://github.com/eclipse/paho.mqtt.c/archive/re
   && rm paho.mqtt.c.tar.gz \
   && cmake \
     -D CMAKE_BUILD_TYPE=Release \
-    -D PAHO_BUILD_STATIC=ON \
+    -D CMAKE_INSTALL_PREFIX:STRING=/opt/PahoMqttC \
     -D PAHO_ENABLE_TESTING=OFF \
     -D PAHO_WITH_SSL=OFF \
     -D PAHO_HIGH_PERFORMANCE=ON \
@@ -38,7 +38,7 @@ RUN wget -O paho.mqtt.cpp.tar.gz https://github.com/eclipse/paho.mqtt.cpp/archiv
   && rm paho.mqtt.cpp.tar.gz \
   && cmake \
     -D CMAKE_BUILD_TYPE=Release \
-    -D PAHO_BUILD_STATIC=ON \
+    -D CMAKE_INSTALL_PREFIX:STRING=/opt/PahoMqttCpp \
     -D PAHO_WITH_SSL=OFF \
     -S paho.mqtt.cpp-1.2.0/ \
     -B build/ \

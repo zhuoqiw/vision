@@ -3,6 +3,11 @@ FROM zhuoqiw/ros:test AS test
 
 FROM ros:galactic
 
+# Install dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  libpcl-segmentation1.10 \
+  && rm -rf /var/lib/apt/lists/*
+  
 COPY --from=test /opt/galaxy/lib/ /opt/galaxy/lib/
 COPY --from=test /opt/opencv/lib /opt/opencv/lib
 COPY --from=test /ws/install /ws/install
