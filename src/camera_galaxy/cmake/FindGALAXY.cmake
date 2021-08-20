@@ -59,7 +59,6 @@ The following cache variables may also be set:
 # Find the include path which includes inc/GxIAPI.h
 find_path(GALAXY_INCLUDE_DIR
   NAMES "GxIAPI.h"
-  HINTS "/opt/Galaxy_camera/inc/"
   DOC "The directory containing GxIAPI.h."
 )
 
@@ -75,7 +74,6 @@ endif()
 # Find the specific libary
 find_library(GALAXY_LIBRARY
   NAMES "gxiapi"
-  HINTS "/opt/Galaxy_camera/lib/"
   DOC "The path to the GxIAPI library file."
 )
 
