@@ -37,13 +37,14 @@ private:
   const char * _srvHighName = "~/high";
   rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr _srvHigh;
 
-  const char * _srvLowName = "~/low";
+  const char* _srvLowName = "~/low";
   rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr _srvLow;
 
   const char * _srvToggleName = "~/toggle";
   rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr _srvToggle;
-};
+}; 
 
 }  // namespace gpio_raspberry
 
 #endif  // GPIO_RASPBERRY__GPIO_RASPBERRY_HPP_
+
