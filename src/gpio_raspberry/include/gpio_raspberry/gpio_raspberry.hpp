@@ -15,6 +15,8 @@
 #ifndef GPIO_RASPBERRY__GPIO_RASPBERRY_HPP_
 #define GPIO_RASPBERRY__GPIO_RASPBERRY_HPP_
 
+#include <memory>
+
 #include "rclcpp/rclcpp.hpp"
 #include "std_srvs/srv/trigger.hpp"
 
@@ -34,14 +36,14 @@ private:
 private:
   int _port = 26;
 
+  class _Impl;
+  std::unique_ptr<_Impl> _impl;
+
   const char * _srvHighName = "~/high";
   rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr _srvHigh;
 
   const char * _srvLowName = "~/low";
   rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr _srvLow;
-
-  const char * _srvToggleName = "~/toggle";
-  rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr _srvToggle;
 };
 
 }  // namespace gpio_raspberry

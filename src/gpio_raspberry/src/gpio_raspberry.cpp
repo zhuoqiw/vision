@@ -14,6 +14,7 @@
 
 #include "gpio_raspberry/gpio_raspberry.hpp"
 
+#include <gpiod.h>
 #include <fstream>
 #include <memory>
 #include <string>
@@ -21,83 +22,54 @@
 namespace gpio_raspberry
 {
 
+class GpioRaspberry::_Impl
+{
+public:
+  _Impl()
+  : _chip(gpiod_chip_open_by_name("gpiochip0"), gpiod_chip_close),
+    _line(gpiod_chip_get_line(_chip.get(), 26), gpiod_line_release)
+  {
+    gpiod_line_request_output(_line.get(), "ros", 0);
+  }
+
+  ~_Impl()
+  {
+  }
+
+  int High()
+  {
+    return gpiod_line_set_value(_line.get(), 1);
+  }
+
+  int Low()
+  {
+    return gpiod_line_set_value(_line.get(), 0);
+  }
+
+private:
+  std::unique_ptr<gpiod_chip, void (*)(gpiod_chip *)> _chip;
+  std::unique_ptr<gpiod_line, void (*)(gpiod_line *)> _line;
+};
+
 using std_srvs::srv::Trigger;
 
-void High(int port)
-{
-  std::ofstream ofile;
-  ofile.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-  ofile.open(
-    std::string("/sys/class/gpio/gpio") +
-    std::to_string(port) +
-    std::string("/direction")
-  );
-
-  ofile << "high" << std::flush;
-}
-
-void Low(int port)
-{
-  std::ofstream ofile;
-  ofile.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-  ofile.open(
-    std::string("/sys/class/gpio/gpio") +
-    std::to_string(port) +
-    std::string("/direction")
-  );
-
-  ofile << "low" << std::flush;
-}
-
-void Toggle(int port)
-{
-  std::ifstream ifile;
-  ifile.exceptions(std::ifstream::failbit | std::ifstream::badbit | std::ifstream::eofbit);
-  ifile.open(
-    std::string("/sys/class/gpio/gpio") +
-    std::to_string(port) +
-    std::string("/value")
-  );
-
-  int flag;
-  ifile >> flag;
-  ifile.close();
-
-  if (flag) {
-    Low(port);
-  } else {
-    High(port);
-  }
-}
-
 GpioRaspberry::GpioRaspberry(const rclcpp::NodeOptions & options)
-: Node("gpio_raspberry_node", options)
+: Node("gpio_raspberry_node", options), _impl(new _Impl)
 {
   _InitializeParameters();
 
   _UpdateParameters();
 
-  std::ofstream ofile("/sys/class/gpio/export");
-  ofile.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-  ofile << _port << std::flush;
-
   _srvHigh = this->create_service<Trigger>(
     _srvHighName,
     [this](const std::shared_ptr<Trigger::Request>, std::shared_ptr<Trigger::Response> response)
     {
-      try {
+      if (_impl->High()) {
         response->success = false;
         response->message = "Failed: IO set to high";
-
-        High(_port);
+      } else {
         response->success = true;
         response->message = "Success: IO set to high";
-      } catch (const std::exception & e) {
-        RCLCPP_ERROR(this->get_logger(), "Exception in service high: %s", e.what());
-        rclcpp::shutdown();
-      } catch (...) {
-        RCLCPP_ERROR(this->get_logger(), "Exception in service high: unknown");
-        rclcpp::shutdown();
       }
     }
   );
@@ -106,40 +78,12 @@ GpioRaspberry::GpioRaspberry(const rclcpp::NodeOptions & options)
     _srvLowName,
     [this](const std::shared_ptr<Trigger::Request>, std::shared_ptr<Trigger::Response> response)
     {
-      try {
+      if (_impl->Low()) {
         response->success = false;
         response->message = "Failed: IO set to low";
-
-        Low(_port);
+      } else {
         response->success = true;
         response->message = "Success: IO set to low";
-      } catch (const std::exception & e) {
-        RCLCPP_ERROR(this->get_logger(), "Exception in service low: %s", e.what());
-        rclcpp::shutdown();
-      } catch (...) {
-        RCLCPP_ERROR(this->get_logger(), "Exception in service low: unknown");
-        rclcpp::shutdown();
-      }
-    }
-  );
-
-  _srvToggle = this->create_service<Trigger>(
-    _srvToggleName,
-    [this](const std::shared_ptr<Trigger::Request>, std::shared_ptr<Trigger::Response> response)
-    {
-      try {
-        response->success = false;
-        response->message = "Failed: IO toggle";
-
-        Toggle(_port);
-        response->success = true;
-        response->message = "Success: IO toggle";
-      } catch (const std::exception & e) {
-        RCLCPP_ERROR(this->get_logger(), "Exception in service toggle: %s", e.what());
-        rclcpp::shutdown();
-      } catch (...) {
-        RCLCPP_ERROR(this->get_logger(), "Exception in service toggle: unknown");
-        rclcpp::shutdown();
       }
     }
   );
@@ -150,10 +94,6 @@ GpioRaspberry::GpioRaspberry(const rclcpp::NodeOptions & options)
 GpioRaspberry::~GpioRaspberry()
 {
   try {
-    std::ofstream ofile("/sys/class/gpio/unexport");
-    ofile.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-    ofile << _port << std::flush;
-
     RCLCPP_INFO(this->get_logger(), "Destroyed successfully");
   } catch (const std::exception & e) {
     RCLCPP_FATAL(this->get_logger(), "Exception in destructor: %s", e.what());
@@ -164,12 +104,12 @@ GpioRaspberry::~GpioRaspberry()
 
 void GpioRaspberry::_InitializeParameters()
 {
-  this->declare_parameter("port", _port);
+  // this->declare_parameter("port", _port);
 }
 
 void GpioRaspberry::_UpdateParameters()
 {
-  this->get_parameter("port", _port);
+  // this->get_parameter("port", _port);
 }
 
 }  // namespace gpio_raspberry
